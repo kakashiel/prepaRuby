@@ -13,7 +13,7 @@ blocks:
       jobs:
         - name: make lint
           commands:
-            - docker-compose compose build
+            - docker-compose build
   - name: Unit tests
     task:
       prologue:
