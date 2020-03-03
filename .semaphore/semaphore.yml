@@ -29,3 +29,12 @@ blocks:
         - name: Unit tests 3/3
           commands:
             - echo "run 3/3"
+  - name: Push image to regist
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: Push to ECR
+          commands:
+            - docker-compose
