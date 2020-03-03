@@ -3,12 +3,12 @@ services:
   db:
     image: postgres
     environment:
-      #- POSTGRES_HOST_AUTH_METHOD:trust
       - POSTGRES_PASSWORD=test
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
     build: .
+    image: 257827191913.dkr.ecr.ap-southeast-2.amazonaws.com/splitprepa:latest
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/myapp

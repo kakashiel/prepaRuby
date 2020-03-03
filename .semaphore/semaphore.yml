@@ -4,6 +4,16 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+global_job_config:
+  env_vars:
+    - name: AWS_ACCOUNT_ID
+      value: 257827191913
+    - name: AWS_DEFAULT_REGION
+      value: ap-southeast-2
+    - name: IMAGE_REPO
+      value: splitprepa
+    - name: TAG
+      value: latest
 blocks:
   - name: Lint
     task:
@@ -13,6 +23,7 @@ blocks:
       jobs:
         - name: make lint
           commands:
+            - sudo pip install awscli
             - docker-compose build
   - name: Unit tests
     task:
@@ -37,4 +48,4 @@ blocks:
       jobs:
         - name: Push to ECR
           commands:
-            - docker-compose
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$TAG
