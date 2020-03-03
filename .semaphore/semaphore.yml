@@ -15,7 +15,7 @@ global_job_config:
     - name: TAG
       value: $SEMAPHORE_WORKFLOW_ID
     - name: AWS_ECR
-      value: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO
+      value: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO}
 blocks:
   - name: Lint
     task:
