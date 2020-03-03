@@ -13,7 +13,9 @@ global_job_config:
     - name: IMAGE_REPO
       value: splitprepa
     - name: TAG
-      value: latest
+      value: $SEMAPHORE_WORKFLOW_ID
+    - name: AWS_ECR
+      value: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO
 blocks:
   - name: Lint
     task:
@@ -24,7 +26,9 @@ blocks:
         - name: make lint
           commands:
             - sudo pip install awscli
-            - docker-compose build
+            - aws ecr get-login --no-include-email | bash
+            - docker pull "${AWS_ECR}:latest" || true
+            - docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${TAG}" .
   - name: Unit tests
     task:
       prologue:
@@ -48,6 +52,5 @@ blocks:
       jobs:
         - name: Push to ECR
           commands:
-            - 'docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$TAG'
-      secrets:
-        - name: AWS_ACCESS
+            - docker images
+            - docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"
