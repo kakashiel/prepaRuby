@@ -19,9 +19,9 @@ blocks:
           commands:
             - sudo pip install awscli
             - aws ecr get-login --no-include-email | bash
-            - echo "${AWS_ECR}:latest" 
-            - docker pull "${AWS_ECR}:latest" || true
-            - docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .
+            - 'echo "${AWS_ECR}:latest"'
+            - 'docker pull "${AWS_ECR}:latest" || true'
+            - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .'
   - name: Unit tests
     task:
       prologue:
@@ -46,4 +46,4 @@ blocks:
         - name: Push to ECR
           commands:
             - docker images
-            - docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"
+            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
