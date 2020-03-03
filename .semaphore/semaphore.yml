@@ -6,16 +6,8 @@ agent:
     os_image: ubuntu1804
 global_job_config:
   env_vars:
-    - name: AWS_ACCOUNT_ID
-      value: '257827191913'
-    - name: AWS_DEFAULT_REGION
-      value: ap-southeast-2
-    - name: IMAGE_REPO
-      value: splitprepa
-    - name: TAG
-      value: $SEMAPHORE_WORKFLOW_ID
     - name: AWS_ECR
-      value: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO}
+      value: 257827191913.dkr.ecr.ap-southeast-2.amazonaws.com/splitprepa
 blocks:
   - name: Lint
     task:
@@ -29,7 +21,7 @@ blocks:
             - aws ecr get-login --no-include-email | bash
             - echo "${AWS_ECR}:latest" 
             - docker pull "${AWS_ECR}:latest" || true
-            - docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${TAG}" .
+            - docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORFLOW_ID}" .
   - name: Unit tests
     task:
       prologue:
