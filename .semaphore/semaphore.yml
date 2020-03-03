@@ -48,4 +48,6 @@ blocks:
       jobs:
         - name: Push to ECR
           commands:
-            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$TAG
+            - 'docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$TAG'
+      secrets:
+        - name: AWS_ACCESS
