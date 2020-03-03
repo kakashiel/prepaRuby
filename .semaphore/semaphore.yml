@@ -22,6 +22,8 @@ blocks:
             - 'echo "${AWS_ECR}:latest"'
             - 'docker pull "${AWS_ECR}:latest" || true'
             - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .'
+      secrets:
+        - name: AWS_ACCESS
   - name: Unit tests
     task:
       prologue:
