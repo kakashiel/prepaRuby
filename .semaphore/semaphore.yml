@@ -27,6 +27,7 @@ blocks:
           commands:
             - sudo pip install awscli
             - aws ecr get-login --no-include-email | bash
+            - echo "${AWS_ECR}:latest" 
             - docker pull "${AWS_ECR}:latest" || true
             - docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${TAG}" .
   - name: Unit tests
