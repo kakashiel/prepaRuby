@@ -6,6 +6,8 @@ agent:
     os_image: ubuntu1804
 global_job_config:
   env_vars:
+    - name: AWS_DEFAULT_REGION
+      value: ap-southeast-2
     - name: AWS_ECR
       value: 257827191913.dkr.ecr.ap-southeast-2.amazonaws.com/splitprepa
 blocks:
@@ -27,6 +29,7 @@ blocks:
             - 'docker pull "${AWS_ECR}:latest" || true'
             - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .'
             - docker images
+            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
       secrets:
         - name: AWS_ACCESS
   - name: Unit tests
@@ -53,4 +56,3 @@ blocks:
         - name: Push to ECR
           commands:
             - docker images
-            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
