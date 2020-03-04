@@ -46,11 +46,14 @@ blocks:
             - echo "run 3/3"
   - name: Push image to regist
     task:
-      prologue:
-        commands:
-          - checkout
       jobs:
         - name: Push to ECR
           commands:
             - docker images
-            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
+            - 'echo ''docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'''
+promotions:
+  - task:
+      jobs:
+        - name: Push to ECR
+          commands:
+            - docker images
