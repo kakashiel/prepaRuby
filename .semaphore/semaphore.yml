@@ -29,7 +29,7 @@ blocks:
             - 'docker pull "${AWS_ECR}:latest" || true'
             - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" -t "${AWS_ECR}:latest" .'
             - docker images
-            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
+            - 'docker push "${AWS_ECR}"'
       secrets:
         - name: AWS_ACCESS
   - name: Unit tests
