@@ -6,6 +6,8 @@ agent:
     os_image: ubuntu1804
 global_job_config:
   env_vars:
+    - name: AWS_DEFAULT_REGION
+      value: ap-southeast-2
     - name: AWS_ECR
       value: 257827191913.dkr.ecr.ap-southeast-2.amazonaws.com/splitprepa
 blocks:
