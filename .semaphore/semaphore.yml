@@ -27,6 +27,7 @@ blocks:
             - 'docker pull "${AWS_ECR}:latest" || true'
             - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .'
             - docker images
+            - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
       secrets:
         - name: AWS_ACCESS
   - name: Unit tests
@@ -46,13 +47,9 @@ blocks:
             - echo "run 3/3"
   - name: Push image to regist
     task:
-      jobs:
-        - name: Push to ECR
-          commands:
-            - docker images
-            - 'echo ''docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'''
-promotions:
-  - task:
+      prologue:
+        commands:
+          - checkout
       jobs:
         - name: Push to ECR
           commands:
