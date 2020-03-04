@@ -27,7 +27,7 @@ blocks:
             - ls $SEMAPHORE_PROJECT_DIR
             - ls $SEMAPHORE_CACHE_DIR
             - 'docker pull "${AWS_ECR}:latest" || true'
-            - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" .'
+            - 'docker build  --cache-from "${AWS_ECR}:latest" -t "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}" -t "${AWS_ECR}:latest" .'
             - docker images
             - 'docker push "${AWS_ECR}:${SEMAPHORE_WORKFLOW_ID}"'
       secrets:
