@@ -19,7 +19,7 @@ blocks:
       jobs:
         - name: make lint
           commands:
-            - sudo pip install awscli
+            - sudo pip -H install awscli
             - aws ecr get-login --no-include-email | bash
             - 'echo "${AWS_ECR}:latest"'
             - echo $AWS_ACCESS_KEY_ID
